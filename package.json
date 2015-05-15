@@ -1,0 +1,46 @@
+{
+  "name": "aronnax-entity",
+  "version": "0.0.1",
+  "description": "A general purpose entity object system.",
+  "main": "dist/entity.js",
+  "repository": "git@github.com:aronnax/entity.git",
+  "scripts": {
+    "clean": "rm -r dist/*",
+    "compile": "babel src/ -s inline -m common -d dist/",
+    "bundle": "browserify src/entity.js -t babelify -o dist/index.js",
+    "compile-bundle": "browserify src/entity.js -t babelify -t uglifyify -o dist/index.min.js",
+    "compile-all": "npm run compile && npm run compile-bundle",
+    "lint": "eslint src/*.js",
+    "test": "npm run unit-test  && npm run integration-test ",
+    "unit-test": "testem ci -f test/unit_testem.json -l phantomjs",
+    "watch-unit-test": "testem -f test/unit_testem.json",
+    "integration-test": "testem ci -f test/integration_testem.json -l phantomjs",
+    "watch-integration-test": "testem -f test/integration_testem.json"
+  },
+  "keywords": [
+    "gaming",
+    "performance"
+  ],
+  "author": "Marco Segreto<msegreto@miceover.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "aronnax-inheritance": "^0.1.1",
+    "aronnax-pooling": "^0.5.6",
+    "babel": "^5.1.13",
+    "babel-eslint": "^3.0.1",
+    "babelify": "^6.0.2",
+    "browserify": "^9.0.8",
+    "eslint": "^0.19.0",
+    "function-bind": "^1.0.2",
+    "phantomjs": "^1.9.16",
+    "redtape": "^1.0.0",
+    "sinon": "^1.14.1",
+    "tape": "^4.0.0",
+    "testem": "^0.8.0-0",
+    "uglifyify": "^3.0.1"
+  },
+  "dependencies": {
+    "aronnax-inheritance": "^0.1.1",
+    "aronnax-pooling": "^0.5.6"
+  }
+}

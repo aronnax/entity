@@ -1,0 +1,21 @@
+{
+  "name": "aronnax-entity",
+  "version": "0.0.1",
+  "authors": [
+    "Marco Segreto<msegreto@miceover.com>"
+  ],
+  "description": "A general purpose entity object system.",
+  "main": "dist/index.min.js",
+  "keywords": [
+    "gaming",
+    "performance"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
