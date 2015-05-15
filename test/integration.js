@@ -2,9 +2,13 @@
 import sinon from 'sinon';
 import redtape from 'redtape';
 
-import './setup';
-import {Entity} from '../src/entity';
 import {inheritance} from 'aronnax-inheritance';
+import {Looping} from 'aronnax-looping';
+
+import './setup';
+import {Entity, makeEntityProto} from '../src/entity';
+
+
 
 var sandbox;
 
@@ -25,26 +29,68 @@ test('exists', t => {
 });
 
 test('basic interface', t => {
-  var Ball = Object.create(Entity, inheritance.wrapProps({
-    radius: 5
+  var ctxEl = document.createElement('div'),
+      loop = Object.create(Looping);
+
+  ctxEl.style.position = 'relative';
+  ctxEl.style.width = '400px';
+  ctxEl.style.height = '300px';
+  document.querySelector('body').appendChild(ctxEl);
+
+  var htmlRenderer = {
+    name: 'renderer',
+    BG_COLOR: '#000',
+    _element: null,
+    _ctx: null,
+
+    render(entity) {
+      var exists = !!this._element;
+      if (!exists) {
+        // TODO use pooling for elements.
+        // TODO html renderer could use function to figure out what it should
+        // be.
+        this._element = document.createElement('div');
+        this._element.style.position = 'absolute';
+        this._element.style.background = this.BG_COLOR;
+        this._ctx.appendChild(this._element);
+      }
+      this._element.style.width = Math.floor(entity.w || 0) + 'px';
+      this._element.style.height = Math.floor(entity.h || 0) + 'px';
+      this._element.style.transform = `translate(
+          ${entity.x || 0}px,
+          ${entity.y || 0}px)`;
+
+    }
+  };
+  htmlRenderer._ctx = ctxEl;
+
+  let Ball = makeEntityProto({
+    radius: 0,
+    x: 0,
+    y: 0,
+    w: 10,
+    h: 10,
+    v: {x: 0, y: 0},
+    update() {
+      this.x += this.v.x;
+      this.y += this.v.y;
+    }
+  }, htmlRenderer);
+
+  let ball = Ball.make();
+  ball.x = 10;
+  // TODO fix, this changes the proto
+  ball.v.x = 1;
+
+  loop.onConstantly(dt => {
+    ball.update();
+    //console.log('update', ball.x, ball.y);
+  });
+  loop.onEveryFrame(dt => {
+    ball.render();
   });
 
-  let htmlRenderer = {
-    name: 'htmlRenderer'
-  };
-
-  var Ball = Entityer(
-    [bounded, htmlRenderer],
-    [is2d, isDraggable],
-    {
-      radius: 5,
-      update() {
-        this.bounded.doSomething();
-      },
-      render() {
-
-      }
-    });
+  loop.start();
 
   t.end();
 });

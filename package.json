@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "aronnax-inheritance": "^0.1.1",
+    "aronnax-looping": "0.0.3",
     "aronnax-pooling": "^0.5.6"
   }
 }
