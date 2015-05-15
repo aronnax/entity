@@ -1,7 +1,7 @@
 {
   "name": "aronnax-entity",
   "version": "0.0.1",
-  "description": "A general purpose entity object system.",
+  "description": "A general purpose, rendering entity object system.",
   "main": "dist/entity.js",
   "repository": "git@github.com:aronnax/entity.git",
   "scripts": {

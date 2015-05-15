@@ -4,7 +4,7 @@
   "authors": [
     "Marco Segreto<msegreto@miceover.com>"
   ],
-  "description": "A general purpose entity object system.",
+  "description": "A general purpose, rendered entity object system.",
   "main": "dist/index.min.js",
   "keywords": [
     "gaming",
