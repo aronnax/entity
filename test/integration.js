@@ -65,12 +65,15 @@ test('basic interface', t => {
   htmlRenderer._ctx = ctxEl;
 
   let Ball = makeEntityProto({
-    radius: 0,
-    x: 0,
-    y: 0,
-    w: 10,
-    h: 10,
-    v: {x: 0, y: 0},
+
+    init(props) {
+      this.x = props.x || 0;
+      this.y = props.y || 0;
+      this.w = props.w || 0;
+      this.h = props.h || 0;
+      this.v = {x: 0, y: 0};
+    },
+
     update() {
       this.x += this.v.x;
       this.y += this.v.y;
