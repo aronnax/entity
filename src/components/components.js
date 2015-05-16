@@ -5,7 +5,7 @@ export var moveable = {
   name: 'moveable',
 
   init(entity) {
-    entity.v = {x: 0, y: 9};
+    entity.v = {x: 0, y: 0};
   },
 
   update(entity) {

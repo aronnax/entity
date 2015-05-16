@@ -80,7 +80,7 @@ test('init() passes props through to inits', t => {
   t.end();
 });
 
-/**
+/*
  * =============================================================================
  * update();
  * =============================================================================
@@ -107,6 +107,11 @@ test('update() calls update on each component that has an update()', t => {
   t.end();
 });
 
+/*
+ * =============================================================================
+ * render();
+ * =============================================================================
+ */
 test('render() calls render on each component that has an render()', t => {
   var spyA = sandbox.spy(),
       spyB = sandbox.spy(),
@@ -125,6 +130,21 @@ test('render() calls render on each component that has an render()', t => {
 
   t.equal(spyA.callCount, 1, 'render A called once');
   t.equal(spyB.callCount, 1, 'render B called once');
+
+  t.end();
+});
+
+test('render() passes entity to each component render method', t => {
+  var spy = sandbox.spy(),
+      component = { name: 'compA', render: spy },
+      TestEntity = makeEntityProto({className: 'testProtoB'}, component);
+
+  let testEntity = TestEntity.make();
+  testEntity.init();
+  testEntity.render();
+
+  t.ok(spy.called, 'the spy was called');
+  t.ok(spy.calledWith(testEntity), 'passes the actual entity as first arg');
 
   t.end();
 });

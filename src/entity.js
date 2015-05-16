@@ -37,7 +37,7 @@ export var Entity = Object.create(Pooled, inh.wrapProps({
   },
 
   render() {
-    this.renderComponents();
+    this.renderComponents(this);
   },
 
   renderComponents(entity) {
