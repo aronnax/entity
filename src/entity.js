@@ -5,7 +5,7 @@ import {Pooled} from 'aronnax-pooling';
 export var Entity = Object.create(Pooled, inh.wrapProps({
   components: [],
 
-  init(props) {
+  init(props={}) {
     this.x = props.x || 0;
     this.y = props.y || 0;
     this.w = props.w || 0;
