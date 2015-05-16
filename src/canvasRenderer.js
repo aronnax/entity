@@ -19,6 +19,9 @@ export var canvasRenderer = {
 };
 
 export function setupCanvasRenderer(ctxEl, opts={}) {
+  if (!ctxEl) {
+    throw new Error('context element (ctxEl) passed in was null');
+  }
   var ctx = ctxEl.getContext('2d');
 
   ctxEl.style.width = (opts.ctxW || CTX_W) + 'px';

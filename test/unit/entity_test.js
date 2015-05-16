@@ -25,6 +25,66 @@ test('exists', t => {
   t.end();
 });
 
+/**
+ * =============================================================================
+ * init();
+ * =============================================================================
+ */
+test('init() setups x, y, w and h to 0', t => {
+  var TestEntity = makeEntityProto({}),
+      actual;
+
+  actual = TestEntity.make();
+  actual.init();
+
+  t.equal(actual.x, 0, 'Sets x to 0');
+  t.equal(actual.y, 0, 'Sets y to 0');
+  t.equal(actual.w, 0, 'Sets w to 0');
+  t.equal(actual.h, 0, 'Sets h to 0');
+
+  t.end();
+});
+
+test('init() calls init on all components', t => {
+  var spy = sandbox.spy(),
+      testComponent = {
+        name: 'testComp',
+        init: spy
+      };
+
+  let TestEntity = makeEntityProto({className: 'TestEntity'}, testComponent);
+
+  let actual = TestEntity.make();
+  actual.init();
+
+  t.equal(spy.callCount, 1, 'component init command called once');
+
+  t.end();
+});
+
+test('init() passes props through to inits', t => {
+  var spy = sandbox.spy(),
+      testComponent = {
+        name: 'testCompA',
+        init: spy
+      },
+      expected = {v: 1};
+
+  let TestEntity = makeEntityProto({className: 'TestEntityA'}, testComponent);
+  let actual = TestEntity.make();
+  actual.init(expected);
+
+  t.equal(spy.callCount, 1, 'component init command called once');
+  t.ok(spy.calledWith(actual, expected), 'spy was called with expected arg');
+
+  t.end();
+});
+
+/**
+ * =============================================================================
+ * update();
+ * =============================================================================
+ */
 test('update() calls update on each component that has an update()', t => {
   var spyA = sandbox.spy(),
       spyB = sandbox.spy(),
@@ -69,6 +129,9 @@ test('render() calls render on each component that has an render()', t => {
   t.end();
 });
 
+/**
+ * makeEntityProto()
+ */
 test('makeEntityProto() extends from Entity with props', t => {
   var testProps = {};
 
@@ -126,6 +189,21 @@ test('makeEntityProto() adds each named component directly', t => {
 
   t.equal(Actual.expected, expected, 'directly adds the component if its named ' +
       'className');
+
+  t.end();
+});
+
+test('makeEntityProto() creating an instance works', t => {
+  var spy = sandbox.spy(),
+      expected = {
+        name: 'expected',
+        m: spy
+      };
+
+  let TestProto = makeEntityProto({className: 'newEntity'}, expected);
+  let actual = TestProto.make();
+  t.equal(actual.components[0], expected, 'expected component in components');
+  t.equal(actual.expected, expected, 'adds named component directly as name');
 
   t.end();
 });
