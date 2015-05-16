@@ -1,14 +1,14 @@
 {
   "name": "aronnax-entity",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A general purpose, rendering entity object system.",
   "main": "dist/entity.js",
   "repository": "git@github.com:aronnax/entity.git",
   "scripts": {
     "clean": "rm -r dist/*",
-    "compile": "babel src/ -s inline -m common -d dist/",
-    "bundle": "browserify src/entity.js -t babelify -o dist/index.js",
-    "compile-bundle": "browserify src/entity.js -t babelify -t uglifyify -o dist/index.min.js",
+    "compile": "babel --optional runtime src/ -s inline -m common -d dist/",
+    "bundle": "browserify src/entity.js -t [ babelify --optional runtime ] -o dist/index.js",
+    "compile-bundle": "browserify src/entity.js -t [ babelify --optional runtime ] -t uglifyify -o dist/index.min.js",
     "compile-all": "npm run compile && npm run compile-bundle",
     "lint": "eslint src/*.js",
     "test": "npm run unit-test  && npm run integration-test ",
@@ -42,6 +42,7 @@
   "dependencies": {
     "aronnax-inheritance": "^0.1.1",
     "aronnax-looping": "0.0.3",
-    "aronnax-pooling": "^0.5.6"
+    "aronnax-pooling": "^0.5.7",
+    "babel-runtime": "^5.4.3"
   }
 }

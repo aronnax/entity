@@ -2,6 +2,10 @@
 import {inheritance as inh} from 'aronnax-inheritance';
 import {Pooled} from 'aronnax-pooling';
 
+export {setupCanvasRenderer} from './canvasRenderer';
+export {setupHTMLRenderer} from './htmlRenderer';
+
+
 export var Entity = Object.create(Pooled, inh.wrapProps({
   components: [],
 
