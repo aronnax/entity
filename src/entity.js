@@ -14,8 +14,12 @@ export var Entity = Object.create(Pooled, inh.wrapProps({
   },
 
   update() {
+    this.updateComponents(this);
+  },
+
+  updateComponents(entity) {
     for (let component of this.components) {
-      component.update && component.update(this);
+      component.update && component.update(entity);
     }
   },
 
