@@ -18,6 +18,7 @@ export var htmlRenderer = {
       this._element.style.background = this.BG_COLOR;
       this._ctx.appendChild(this._element);
     }
+    this._element.style.background = this.BG_COLOR;
   },
 
   renderMovement(entity) {
@@ -28,7 +29,6 @@ export var htmlRenderer = {
 
   renderRectangle(entity) {
     // TODO how to make bg only happen once (don't waste cycles)
-    this._element.style.background = this.BG_COLOR;
     this._element.style.width = Math.floor(entity.w || 0) + 'px';
     this._element.style.height = Math.floor(entity.h || 0) + 'px';
   },
@@ -45,12 +45,17 @@ export var htmlRenderer = {
 };
 
 export function setupHTMLRenderer(ctxEl, opts={}) {
+  if (!ctxEl) {
+    throw new Error('context element is null');
+  }
   ctxEl.style.position = 'relative';
   ctxEl.style.width = (opts.ctxW || CTX_W) + 'px';
   ctxEl.style.height = (opts.ctxH || CTX_H) + 'px';
 
   let renderer = Object.create(htmlRenderer, inh.wrapProps({
-    _ctx: ctxEl
+    _ctx: ctxEl,
+    bW: (opts.ctxW || CTX_W),
+    bH: (opts.ctxH || CTX_H)
   }));
 
   return renderer;
