@@ -117,7 +117,6 @@ test('update passes arguments to each update function', t => {
   testEntity.init();
   testEntity.update(expected);
 
-  debugger;
   t.ok(spy.called, 'the update spy was called');
   t.ok(spy.calledWith(testEntity, expected), 'spy called with expected arg');
 

@@ -13,7 +13,7 @@
     "lint": "eslint src/*.js",
     "test": "npm run unit-test  && npm run integration-test ",
     "unit-test": "testem ci -f test/unit_testem.json -l phantomjs",
-    "watch-unit-test": "testem -f test/unit_testem.json",
+    "watch-unit-test": "testem -d -f test/unit_testem.json",
     "integration-test": "testem ci -f test/integration_testem.json -l phantomjs",
     "watch-integration-test": "testem -f test/integration_testem.json"
   },

@@ -8,7 +8,7 @@ export var htmlRenderer = {
   name: 'renderer',
   BG_COLOR: '#000',
 
-  beforeRender(entity) {
+  init(entity) {
     if (!this._element) {
       // TODO use pooling for elements.
       // TODO html renderer could use function to figure out what it should
@@ -18,6 +18,9 @@ export var htmlRenderer = {
       this._element.style.background = this.BG_COLOR;
       this._ctx.appendChild(this._element);
     }
+  },
+
+  beforeRender(entity) {
     this._element.style.background = this.BG_COLOR;
   },
 

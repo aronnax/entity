@@ -1,10 +1,10 @@
 
 import {inheritance as inh} from 'aronnax-inheritance';
 import {Pooled} from 'aronnax-pooling';
-import * as components from './components/components';
 
-export {setupCanvasRenderer} from './canvasRenderer';
-export {setupHTMLRenderer} from './htmlRenderer';
+import * as components from './components/components';
+export {setupCanvasRenderer} from './canvas_renderer';
+export {setupHTMLRenderer} from './html_renderer';
 
 
 export var Entity = Object.create(Pooled, inh.wrapProps({
@@ -27,7 +27,6 @@ export var Entity = Object.create(Pooled, inh.wrapProps({
   },
 
   update(...props) {
-    console.log(props);
     this.updateComponents(this, ...props);
   },
 
