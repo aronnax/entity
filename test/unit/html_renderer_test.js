@@ -124,3 +124,52 @@ test('beforeRender() sets element background to default background', t => {
 
   t.end();
 });
+
+/**
+ * =============================================================================
+ * renderMovement();
+ * =============================================================================
+ */
+test('renderMovement() sets elements transform to translate x and y', t => {
+  var rendrr = setupHTMLRenderer(document.createElement('div')),
+      expectedX = 3,
+      expectedY = 5,
+      testEntity = { x: expectedX, y: expectedY },
+      expected = 'translate(' + expectedX + 'px, ' + expectedY + 'px)';
+
+  rendrr.init({});
+  rendrr.renderMovement(testEntity);
+
+  let actual = rendrr._element.style.transform
+    .replace(/(\r\n|\n|\r)/gm, '')
+    .replace(/\s+/g, '');
+
+  expected = expected
+    .replace(/(\r\n|\n|\r)/gm, '')
+    .replace(/\s+/g, '');
+
+  t.equal(actual, expected, 'transform equals to translate ' +
+      'x and y');
+
+  t.end();
+});
+
+/**
+ * =============================================================================
+ * renderRectangle();
+ * =============================================================================
+ */
+test('renderRectangle() sets elements width and height to entity props', t => {
+  var rendrr = setupHTMLRenderer(document.createElement('div')),
+      expectedW = 15,
+      expectedH = 10,
+      testEntity = { w: expectedW, h: expectedH };
+
+  rendrr.init({});
+  rendrr.renderRectangle(testEntity);
+
+  t.equal(rendrr._element.style.width, expectedW + 'px', 'sets width to expected');
+  t.equal(rendrr._element.style.height, expectedH + 'px', 'sets height to expected');
+
+  t.end();
+});
