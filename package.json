@@ -1,6 +1,6 @@
 {
   "name": "aronnax-entity",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A general purpose, rendering entity object system.",
   "main": "dist/entity.js",
   "repository": "git@github.com:aronnax/entity.git",
