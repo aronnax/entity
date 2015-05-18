@@ -104,3 +104,23 @@ test('init() does nothing if element already exists', t => {
 
   t.end();
 });
+
+/**
+ * =============================================================================
+ * beforeRender();
+ * =============================================================================
+ */
+test('beforeRender() sets element background to default background', t => {
+  var rendrr = setupHTMLRenderer(document.createElement('div')),
+      expectedHex = '#FF0000',
+      expected = helpers.hexToRgb(expectedHex).toString();
+
+  rendrr.init({});
+  rendrr.BG_COLOR = expectedHex;
+  rendrr.beforeRender({});
+
+  t.equal(rendrr._element.style.background, expected,
+      'sets background to default on renderer object');
+
+  t.end();
+});
