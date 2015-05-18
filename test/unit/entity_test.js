@@ -107,6 +107,23 @@ test('update() calls update on each component that has an update()', t => {
   t.end();
 });
 
+test('update passes arguments to each update function', t => {
+  var spy = sandbox.spy(),
+      comp = { update: spy, name: 'compD' },
+      TestEntity = makeEntityProto({className: 'TestEntityD'}, comp),
+      expected = 5;
+
+  let testEntity = TestEntity.make();
+  testEntity.init();
+  testEntity.update(expected);
+
+  debugger;
+  t.ok(spy.called, 'the update spy was called');
+  t.ok(spy.calledWith(testEntity, expected), 'spy called with expected arg');
+
+  t.end();
+});
+
 /*
  * =============================================================================
  * render();
@@ -150,7 +167,9 @@ test('render() passes entity to each component render method', t => {
 });
 
 /**
+ * =============================================================================
  * makeEntityProto()
+ * =============================================================================
  */
 test('makeEntityProto() extends from Entity with props', t => {
   var testProps = {};

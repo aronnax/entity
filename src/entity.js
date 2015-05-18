@@ -26,13 +26,14 @@ export var Entity = Object.create(Pooled, inh.wrapProps({
     }
   },
 
-  update() {
-    this.updateComponents(this);
+  update(...props) {
+    console.log(props);
+    this.updateComponents(this, ...props);
   },
 
-  updateComponents(entity) {
+  updateComponents(entity, ...props) {
     for (let component of this.components) {
-      component.update && component.update(entity);
+      component.update && component.update(entity, ...props);
     }
   },
 
