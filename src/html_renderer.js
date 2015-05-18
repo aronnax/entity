@@ -24,26 +24,25 @@ export var htmlRenderer = {
     this._element.style.background = this.BG_COLOR;
   },
 
-  renderMovement(entity) {
+  renderMovement(entity={}) {
     this._element.style.transform = `translate(
         ${entity.x || 0}px,
         ${entity.y || 0}px)`;
   },
 
-  renderRectangle(entity) {
+  renderRectangle(entity={}) {
     // TODO how to make bg only happen once (don't waste cycles)
     this._element.style.width = Math.floor(entity.w || 0) + 'px';
     this._element.style.height = Math.floor(entity.h || 0) + 'px';
   },
 
-  renderCircle(entity) {
-    var ctx = this._ctx,
-        el = this._element;
+  renderCircle(entity={}) {
+    var el = this._element;
 
-    el.style.borderRadiusTopRight = entity.r.tr;
-    el.style.borderRadiusTopLeft = entity.r.tl;
-    el.style.borderRadiusBottomRight = entity.r.br;
-    el.style.borderRadiusBottomLeft = entity.r.bl;
+    el.style.borderRadiusTopRight = (entity.r && entity.r.tr || 0 ) + 'px';
+    el.style.borderRadiusTopLeft = (entity.r && entity.r.tl || 0 ) + 'px';
+    el.style.borderRadiusBottomRight = (entity.r && entity.r.br || 0 ) + 'px';
+    el.style.borderRadiusBottomLeft = (entity.r && entity.r.bl || 0 ) + 'px';
   }
 };
 
