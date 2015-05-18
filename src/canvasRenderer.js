@@ -15,6 +15,25 @@ export var canvasRenderer = {
 
     this._ctx.fillRect(entity.x, entity.y, entity.w, entity.h);
 
+  },
+
+  renderCircle(entity) {
+    var ctx = this._ctx;
+
+    ctx.filleStyle = this.BG_COLOR;
+    ctx.beginPath();
+    ctx.moveTo(entity.x + entity.r.tl, entity.y);
+    ctx.lineTo(entity.r.r - (entity.r.tr), entity.y);
+    ctx.quadraticCurveTo(entity.r.r, entity.y, entity.r.r, entity.y + entity.r.tr);
+    ctx.lineTo(entity.r.r, (entity.x + entity.h) - entity.r.br);
+    ctx.quadraticCurveTo(entity.r.r, (entity.x + entity.h), entity.r.r- entity.r.br, (entity.x + entity.h));
+    ctx.lineTo(entity.x + entity.r.bl, (entity.x + entity.h));
+    ctx.quadraticCurveTo(entity.x, (entity.x + entity.h), entity.x, (entity.x + entity.h) - entity.r.bl);
+    ctx.lineTo(entity.x, entity.y + entity.r.tl);
+    ctx.quadraticCurveTo(entity.x, entity.y, entity.x + entity.r.tl, entity.y);
+    ctx.fill();
+    ctx.endPath();
+
   }
 };
 

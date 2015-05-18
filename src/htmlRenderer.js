@@ -8,7 +8,7 @@ export var htmlRenderer = {
   name: 'renderer',
   BG_COLOR: '#000',
 
-  render(entity) {
+  beforeRender(entity) {
     if (!this._element) {
       // TODO use pooling for elements.
       // TODO html renderer could use function to figure out what it should
@@ -18,12 +18,29 @@ export var htmlRenderer = {
       this._element.style.background = this.BG_COLOR;
       this._ctx.appendChild(this._element);
     }
-    this._element.style.width = Math.floor(entity.w || 0) + 'px';
-    this._element.style.height = Math.floor(entity.h || 0) + 'px';
+  },
+
+  renderMovement(entity) {
     this._element.style.transform = `translate(
         ${entity.x || 0}px,
         ${entity.y || 0}px)`;
+  },
 
+  renderRectangle(entity) {
+    // TODO how to make bg only happen once (don't waste cycles)
+    this._element.style.background = this.BG_COLOR;
+    this._element.style.width = Math.floor(entity.w || 0) + 'px';
+    this._element.style.height = Math.floor(entity.h || 0) + 'px';
+  },
+
+  renderCircle(entity) {
+    var ctx = this._ctx,
+        el = this._element;
+
+    el.style.borderRadiusTopRight = entity.r.tr;
+    el.style.borderRadiusTopLeft = entity.r.tl;
+    el.style.borderRadiusBottomRight = entity.r.br;
+    el.style.borderRadiusBottomLeft = entity.r.bl;
   }
 };
 
