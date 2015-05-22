@@ -10,7 +10,6 @@ export {setupHTMLRenderer} from './html_renderer';
 export var Entity = Object.create(Pooled, inh.wrapProps({
   className: 'entity',
   components: [],
-  ee: 1,
 
   init(props={}) {
     this.x = props.x || 0;

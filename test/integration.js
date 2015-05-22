@@ -57,7 +57,7 @@ test('basic setup for html renderer', t => {
   t.equal(teste.w, eW, 'x set to expected');
   t.equal(teste.v.x, 0, 'moveable components sets velocity to 0 by default');
   t.ok(teste.renderer, 'renderer exists');
-  let el = teste.renderer._element;
+  let el = teste._element;
   t.ok(el, 'element exists on renderer');
 
   // after render
@@ -74,11 +74,17 @@ test('basic setup for html renderer', t => {
   // after render
   teste.x = eX;
   teste.render();
-  t.equal(el.style.transform, 'translate(10px, 10px)',
+  let actual = el.style.transform
+    .replace(/(\r\n|\n|\r)/gm, '')
+    .replace(/\s+/g, '');
+  t.equal(actual, 'translate(10px,10px)',
       'el style transform starts at expected');
   teste.update();
   teste.render();
-  t.equal(el.style.transform, 'translate(11px, 10px)',
+  actual = el.style.transform
+    .replace(/(\r\n|\n|\r)/gm, '')
+    .replace(/\s+/g, '');
+  t.equal(actual, 'translate(11px,10px)',
       'el style transform adds x');
 
   loop.onEveryFrame(dt => {
@@ -94,3 +100,51 @@ test('basic setup for html renderer', t => {
   t.end();
 });
 
+test('testing two elements of same type', t => {
+  var ctxEl = document.createElement('div');
+
+  let loop = Object.create(Looping);
+  let rendrr = setupHTMLRenderer(ctxEl);
+
+  let TestE = makeEntityProto({className: 'Test'},
+      // TODO this call should potentially fail without a renderer.
+      rendrr,
+      component.rectangular,
+      component.moveable);
+
+  let test1 = TestE.make();
+  let test2 = TestE.make();
+  test1.init({x: 0, y: 0, w: 5, h: 5});
+  test2.init({x: 3, y: 3, w: 10, h: 10});
+
+  t.equal(test1.x, 0, 'first entity x is 0');
+  t.equal(test1.w, 5, 'first entity w is 5');
+  t.equal(test2.y, 3, 'first entity y is 3');
+  t.equal(test2.w, 10, 'second entity w is 10');
+
+  test1.v.x = 1;
+  test2.v.x = 2;
+  test1.update();
+  test2.update();
+  t.equal(test1.x, 0 + 1, 'entity 1 set to x + velocity x');
+  t.equal(test2.x, 3 + 2, 'entity 2 set to x + velocity x');
+
+  test1.x = 0;
+  test2.x = 3;
+  test1.render();
+  test2.render();
+  let el1 = test1._element;
+  let el2 = test2._element;
+  let actual1 = el1.style.transform
+    .replace(/(\r\n|\n|\r)/gm, '')
+    .replace(/\s+/g, '');
+  let actual2 = el2.style.transform
+    .replace(/(\r\n|\n|\r)/gm, '')
+    .replace(/\s+/g, '');
+  t.equal(actual1, 'translate(0px,0px)',
+      'el 1 style transform set to current x and y');
+  t.equal(actual2, 'translate(3px,3px)',
+      'el 2 style transform set to current x and y');
+
+  t.end();
+});

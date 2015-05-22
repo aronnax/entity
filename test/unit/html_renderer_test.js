@@ -36,39 +36,42 @@ test('exists', t => {
 test('init() creates new element and sets it to element', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
       expected = stubHTMLElement,
+      testEntity = {},
       stub;
 
   stub = sandbox.stub(document, 'createElement', () => {
     return expected;
   });
 
-  t.ok(!rendrr._element, 'element doesn\'t exist yet');
+  t.ok(!testEntity._element, 'element doesn\'t exist yet');
 
-  rendrr.init({});
+  rendrr.init(testEntity);
 
-  t.equal(rendrr._element, expected, 'element set to stub html element');
+  t.equal(testEntity._element, expected, 'element set to stub html element');
 
   t.end();
 });
 
 test('init() sets element position to absolute', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
+      testEntity = {},
       expected = 'absolute';
 
-  rendrr.init({});
+  rendrr.init(testEntity);
 
-  t.equal(rendrr._element.style.position, expected, 'sets style to absolute');
+  t.equal(testEntity._element.style.position, expected, 'sets style to absolute');
 
   t.end();
 });
 
 test('init() sets element background to bg color default on renderer', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
+      testEntity = {},
       expected = helpers.hexToRgb(rendrr.BG_COLOR).toString();
 
-  rendrr.init({});
+  rendrr.init(testEntity);
 
-  t.equal(rendrr._element.style.background, expected,
+  t.equal(testEntity._element.style.background, expected,
       'sets background to default on renderer object');
 
   t.end();
@@ -96,9 +99,8 @@ test('init() does nothing if element already exists', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div'));
 
   let stubCreate = sandbox.stub(document, 'createElement');
-  rendrr._element = stubHTMLElement;
 
-  rendrr.init({});
+  rendrr.init({_element: stubHTMLElement});
 
   t.equal(stubCreate.callCount, 0, 'create stub not called');
 
@@ -112,14 +114,15 @@ test('init() does nothing if element already exists', t => {
  */
 test('beforeRender() sets element background to default background', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
+      testEntity = {},
       expectedHex = '#FF0000',
       expected = helpers.hexToRgb(expectedHex).toString();
 
-  rendrr.init({});
+  rendrr.init(testEntity);
   rendrr.BG_COLOR = expectedHex;
-  rendrr.beforeRender({});
+  rendrr.beforeRender(testEntity);
 
-  t.equal(rendrr._element.style.background, expected,
+  t.equal(testEntity._element.style.background, expected,
       'sets background to default on renderer object');
 
   t.end();
@@ -137,10 +140,10 @@ test('renderMovement() sets elements transform to translate x and y', t => {
       testEntity = { x: expectedX, y: expectedY },
       expected = 'translate(' + expectedX + 'px, ' + expectedY + 'px)';
 
-  rendrr.init({});
+  rendrr.init(testEntity);
   rendrr.renderMovement(testEntity);
 
-  let actual = rendrr._element.style.transform
+  let actual = testEntity._element.style.transform
     .replace(/(\r\n|\n|\r)/gm, '')
     .replace(/\s+/g, '');
 
@@ -156,12 +159,13 @@ test('renderMovement() sets elements transform to translate x and y', t => {
 
 test('renderMovement() sets elements transform to 0 by default', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
+      testEntity = {},
       expected = 'translate(' + 0 + 'px, ' + 0 + 'px)';
 
-  rendrr.init({});
-  rendrr.renderMovement({});
+  rendrr.init(testEntity);
+  rendrr.renderMovement(testEntity);
 
-  let actual = rendrr._element.style.transform
+  let actual = testEntity._element.style.transform
     .replace(/(\r\n|\n|\r)/gm, '')
     .replace(/\s+/g, '');
 
@@ -185,23 +189,24 @@ test('renderRectangle() sets elements width and height to entity props', t => {
       expectedH = 10,
       testEntity = { w: expectedW, h: expectedH };
 
-  rendrr.init({});
+  rendrr.init(testEntity);
   rendrr.renderRectangle(testEntity);
 
-  t.equal(rendrr._element.style.width, expectedW + 'px', 'sets width to expected');
-  t.equal(rendrr._element.style.height, expectedH + 'px', 'sets height to expected');
+  t.equal(testEntity._element.style.width, expectedW + 'px', 'sets width to expected');
+  t.equal(testEntity._element.style.height, expectedH + 'px', 'sets height to expected');
 
   t.end();
 });
 
 test('renderRectangle() sets elements width and height to 0 by default', t => {
-  var rendrr = setupHTMLRenderer(document.createElement('div'));
+  var rendrr = setupHTMLRenderer(document.createElement('div')),
+      testEntity = {};
 
-  rendrr.init({});
-  rendrr.renderRectangle();
+  rendrr.init(testEntity);
+  rendrr.renderRectangle(testEntity);
 
-  t.equal(rendrr._element.style.width, 0 + 'px', 'sets width to 0');
-  t.equal(rendrr._element.style.height, 0 + 'px', 'sets height to 0');
+  t.equal(testEntity._element.style.width, 0 + 'px', 'sets width to 0');
+  t.equal(testEntity._element.style.height, 0 + 'px', 'sets height to 0');
 
   t.end();
 });
@@ -216,7 +221,7 @@ test('renderCircle() sets elements border radius elements', t => {
       expectedTR = 10,
       expectedBL = 5,
       expectedBR = 20,
-      testEntity = {}
+      testEntity = {};
 
   testEntity.r = {
     tr: expectedTR,
@@ -225,34 +230,35 @@ test('renderCircle() sets elements border radius elements', t => {
     br: expectedBR
   };
 
-  rendrr.init({});
+  rendrr.init(testEntity);
   rendrr.renderCircle(testEntity);
 
-  t.equal(rendrr._element.style.borderRadiusTopRight, expectedTR + 'px',
+  t.equal(testEntity._element.style.borderRadiusTopRight, expectedTR + 'px',
       'sets top right to expected');
-  t.equal(rendrr._element.style.borderRadiusTopLeft, expectedTL + 'px',
+  t.equal(testEntity._element.style.borderRadiusTopLeft, expectedTL + 'px',
       'sets top left to expected');
-  t.equal(rendrr._element.style.borderRadiusBottomRight, expectedBR + 'px',
+  t.equal(testEntity._element.style.borderRadiusBottomRight, expectedBR + 'px',
       'sets bottom right to expected');
-  t.equal(rendrr._element.style.borderRadiusBottomLeft, expectedBL + 'px',
+  t.equal(testEntity._element.style.borderRadiusBottomLeft, expectedBL + 'px',
       'sets bottom left to expected');
 
   t.end();
 });
 
 test('renderCircle() sets elements border radius to 0 by default', t => {
-  var rendrr = setupHTMLRenderer(document.createElement('div'));
+  var rendrr = setupHTMLRenderer(document.createElement('div')),
+      testEntity = {};
 
-  rendrr.init({});
-  rendrr.renderCircle();
+  rendrr.init(testEntity);
+  rendrr.renderCircle(testEntity);
 
-  t.equal(rendrr._element.style.borderRadiusTopRight, 0 + 'px',
+  t.equal(testEntity._element.style.borderRadiusTopRight, 0 + 'px',
       'sets top right to 0');
-  t.equal(rendrr._element.style.borderRadiusTopLeft, 0 + 'px',
+  t.equal(testEntity._element.style.borderRadiusTopLeft, 0 + 'px',
       'sets top left to 0');
-  t.equal(rendrr._element.style.borderRadiusBottomRight, 0 + 'px',
+  t.equal(testEntity._element.style.borderRadiusBottomRight, 0 + 'px',
       'sets bottom right to 0');
-  t.equal(rendrr._element.style.borderRadiusBottomLeft, 0 + 'px',
+  t.equal(testEntity._element.style.borderRadiusBottomLeft, 0 + 'px',
       'sets bottom left to 0');
 
   t.end();
