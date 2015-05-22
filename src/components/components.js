@@ -54,7 +54,7 @@ export var rounded = {
 
   render(entity) {
     entity.renderer.beforeRender(entity);
-    entity.renderer.renderCircle(entity);
+    entity.renderer.renderRounded(entity);
   }
 
 };

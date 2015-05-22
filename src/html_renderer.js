@@ -36,7 +36,7 @@ export var htmlRenderer = {
     entity._element.style.height = Math.floor(entity.h || 0) + 'px';
   },
 
-  renderCircle(entity={}) {
+  renderRounded(entity={}) {
     var el = entity._element;
 
     el.style.borderRadiusTopRight = (entity.r && entity.r.tr || 0 ) + 'px';

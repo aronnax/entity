@@ -212,10 +212,10 @@ test('renderRectangle() sets elements width and height to 0 by default', t => {
 });
 /**
  * =============================================================================
- * renderCircle();
+ * renderRounded();
  * =============================================================================
  */
-test('renderCircle() sets elements border radius elements', t => {
+test('renderRounded() sets elements border radius elements', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
       expectedTL = 15,
       expectedTR = 10,
@@ -231,7 +231,7 @@ test('renderCircle() sets elements border radius elements', t => {
   };
 
   rendrr.init(testEntity);
-  rendrr.renderCircle(testEntity);
+  rendrr.renderRounded(testEntity);
 
   t.equal(testEntity._element.style.borderRadiusTopRight, expectedTR + 'px',
       'sets top right to expected');
@@ -245,12 +245,12 @@ test('renderCircle() sets elements border radius elements', t => {
   t.end();
 });
 
-test('renderCircle() sets elements border radius to 0 by default', t => {
+test('renderRounded() sets elements border radius to 0 by default', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
       testEntity = {};
 
   rendrr.init(testEntity);
-  rendrr.renderCircle(testEntity);
+  rendrr.renderRounded(testEntity);
 
   t.equal(testEntity._element.style.borderRadiusTopRight, 0 + 'px',
       'sets top right to 0');

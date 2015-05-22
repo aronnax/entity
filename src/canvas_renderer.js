@@ -17,7 +17,7 @@ export var canvasRenderer = {
 
   },
 
-  renderCircle(entity) {
+  renderRounded(entity) {
     var ctx = this._ctx;
 
     ctx.filleStyle = this.BG_COLOR;
