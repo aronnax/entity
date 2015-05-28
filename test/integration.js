@@ -148,3 +148,18 @@ test('testing two elements of same type', t => {
 
   t.end();
 });
+
+test('eventing works', t => {
+  var TestEntity = makeEntityProto({className: 'Squid'});
+
+  let testE = TestEntity.make();
+  testE.init({});
+
+  testE.on('testEvent', (data) => {
+
+  });
+
+  testE.emit('testEvent', {id: 1});
+
+  t.end();
+});

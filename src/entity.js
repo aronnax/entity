@@ -43,6 +43,26 @@ export var Entity = Object.create(Pooled, inh.wrapProps({
     for (let component of this.components) {
       component.render && component.render(entity);
     }
+  },
+
+  /**
+   * Publish an event with data.
+   *
+   * @param {String} event Name of event to publish.
+   * @param {Object} data Data to send with the event.
+   */
+  emit(event, data) {
+    eventing.publish(event, data);
+  },
+
+  /**
+   * Subscribe to an event and call a callback.
+   *
+   * @param {String} event Name of event to publish.
+   * @param {Function} cb Callback function to call when event is published.
+   */
+  on(event, cb) {
+    return eventing.subscribe(event, cb);
   }
 }));
 

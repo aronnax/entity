@@ -245,3 +245,44 @@ test('makeEntityProto() creating an instance works', t => {
 
   t.end();
 });
+
+/**
+ * =============================================================================
+ * emit()
+ * =============================================================================
+ */
+test('emit() should call all subscriber events', t => {
+  var spyA = sandbox.spy(),
+      testEvent = 'tester';
+
+  let TestProto = makeEntityProto({className: 'EntityM'});
+  let testE = TestProto.make();
+
+  testE.on(testEvent, spyA);
+  testE.emit(testEvent);
+
+  t.ok(spyA.calledOnce, 'callback was called');
+
+  t.end();
+});
+
+/**
+ * =============================================================================
+ * on()
+ * =============================================================================
+ */
+test('on() should call a function for the subscribed event', t => {
+  var spy = sandbox.spy(),
+      expected = {test: 'data'},
+      testEvent = 'test:event';
+
+  let TestProto = makeEntityProto({className: 'EntityI'});
+  let testE = TestProto.make();
+
+  testE.on(testEvent, spy);
+  testE.emit(testEvent, expected);
+
+  t.ok(spy.withArgs(expected).calledOnce, 'calls spy with data arg');
+
+  t.end();
+});
