@@ -257,6 +257,7 @@ test('emit() should call all subscriber events', t => {
 
   let TestProto = makeEntityProto({className: 'EntityM'});
   let testE = TestProto.make();
+  testE.init({});
 
   testE.on(testEvent, spyA);
   testE.emit(testEvent);
@@ -278,11 +279,37 @@ test('on() should call a function for the subscribed event', t => {
 
   let TestProto = makeEntityProto({className: 'EntityI'});
   let testE = TestProto.make();
+  testE.init({});
 
   testE.on(testEvent, spy);
   testE.emit(testEvent, expected);
 
   t.ok(spy.withArgs(expected).calledOnce, 'calls spy with data arg');
+
+  t.end();
+});
+
+/**
+ * =============================================================================
+ * onAny()
+ * =============================================================================
+ */
+test('onAny() should call a function for any subscribed event', t => {
+  var spy = sandbox.spy(),
+      expected = {test: 'data'},
+      testEventG = 'testEventG',
+      testEventH = 'testEventH';
+
+
+  let TestProto = makeEntityProto({className: 'EntityI'});
+  let testE = TestProto.make();
+  testE.init({});
+
+  testE.onAny(spy);
+  testE.emit(testEventG, expected);
+  testE.emit(testEventH, expected);
+
+  t.ok(spy.callCount, 2, 'listnered called twice for different events');
 
   t.end();
 });
