@@ -150,16 +150,19 @@ test('testing two elements of same type', t => {
 });
 
 test('eventing works', t => {
-  var TestEntity = makeEntityProto({className: 'Squid'});
+  var TestEntity = makeEntityProto({className: 'Squid'}),
+      expected = {id: 1},
+      spy = sandbox.spy();
 
   let testE = TestEntity.make();
   testE.init({});
 
-  testE.on('testEvent', (data) => {
-
-  });
+  testE.on('testEvent', spy);
 
   testE.emit('testEvent', {id: 1});
+
+  t.ok(spy.withArgs(expected).calledOnce, 'calls the listener once with ' +
+      'expected args');
 
   t.end();
 });
