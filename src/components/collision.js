@@ -10,9 +10,9 @@
  */
 
 export var collision = {
-  _entities: [],
 
   init(entity, props) {
+    this._entities = this._entities || [];
     this._entities.push(entity);
   },
 

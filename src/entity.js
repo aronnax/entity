@@ -81,7 +81,7 @@ export var Entity = Object.create(Pooled, inh.wrapProps({
   }
 }));
 
-export function makeEntityProto(props, ...components) {
+export function makeEntityProto(props={}, ...components) {
   Object.assign(props, {components: []});
   var proto = Object.create(Entity, inh.wrapProps(props));
 
