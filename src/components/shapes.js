@@ -2,6 +2,8 @@
 import {inheritance as inh} from 'aronnax-inheritance';
 
 export var rectangular = {
+  name: 'rectangular',
+  isRectangular: true,
 
   init(entity, props) {
     entity.w = props.w || 0;
@@ -16,6 +18,7 @@ export var rectangular = {
 
 export var rounded = {
   name: 'rounded',
+  isRounded: true,
 
   init(entity, props) {
     entity.r = props.r || {tl: 0, tr: 0, bl: 0, br: 0};
