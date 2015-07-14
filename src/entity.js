@@ -1,5 +1,6 @@
 
 import ee2 from 'eventemitter2';
+import sat from 'sat';
 
 import {inheritance as inh} from 'aronnax-inheritance';
 import {Pooled} from 'aronnax-pooling';
@@ -8,15 +9,34 @@ import * as components from './components/components';
 export {setupCanvasRenderer} from './canvas_renderer';
 export {setupHTMLRenderer} from './html_renderer';
 
-var EventEmitter = ee2.EventEmitter2
+var EventEmitter = ee2.EventEmitter2;
 
-export var Entity = Object.create(Pooled, inh.wrapProps({
+export var Entity = {
   className: 'entity',
   components: [],
 
+  get x() {
+    var pos = this.pos || {};
+    return pos.x;
+  },
+
+  get y() {
+    var pos = this.pos || {};
+    return pos.y;
+  },
+
+  set x(val) {
+    var pos = this.pos || {};
+    pos.x = val;
+  },
+
+  set y(val) {
+    var pos = this.pos || {};
+    pos.y = val;
+  },
+
   init(props={}) {
-    this.x = props.x || 0;
-    this.y = props.y || 0;
+    this.pos = new sat.Vector(props.x, props.y);
     this.w = props.w || 0;
     this.h = props.h || 0;
     this.initComponents(this, props);
@@ -79,7 +99,7 @@ export var Entity = Object.create(Pooled, inh.wrapProps({
   onAny(listener) {
     return this._events.onAny(listener);
   }
-}));
+};
 
 export function makeEntityProto(props={}, ...components) {
   Object.assign(props, {components: []});
@@ -94,6 +114,10 @@ export function makeEntityProto(props={}, ...components) {
       }
     }
   }
+
+  proto.make = function() {
+    return Object.create(proto);
+  };
 
   return proto;
 };

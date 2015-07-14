@@ -44,6 +44,7 @@
     "aronnax-looping": "0.0.3",
     "aronnax-pooling": "^0.5.7",
     "babel-runtime": "^5.4.3",
-    "eventemitter2": "^0.4.14"
+    "eventemitter2": "^0.4.14",
+    "sat": "^0.5.0"
   }
 }
