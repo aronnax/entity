@@ -12,6 +12,7 @@ import SAT from 'sat';
  */
 
 export var collision = {
+  name: 'collision',
 
   init(entity, props) {
   },
@@ -33,6 +34,7 @@ export var collision = {
 
     collision = method(entityA, entityB, response);
     if (collision) {
+      entityA.emit('collision', response);
       return response;
     }
 

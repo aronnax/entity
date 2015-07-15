@@ -217,30 +217,17 @@ test('renderRectangle() sets elements width and height to 0 by default', t => {
  */
 test('renderRounded() sets elements border radius elements', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
-      expectedTL = 15,
-      expectedTR = 10,
-      expectedBL = 5,
-      expectedBR = 20,
+      expected = 5,
       testEntity = {};
 
-  testEntity.r = {
-    tr: expectedTR,
-    tl: expectedTL,
-    bl: expectedBL,
-    br: expectedBR
-  };
+  testEntity.r = expected;
 
   rendrr.init(testEntity);
   rendrr.renderRounded(testEntity);
 
-  t.equal(testEntity._element.style.borderRadiusTopRight, expectedTR + 'px',
-      'sets top right to expected');
-  t.equal(testEntity._element.style.borderRadiusTopLeft, expectedTL + 'px',
-      'sets top left to expected');
-  t.equal(testEntity._element.style.borderRadiusBottomRight, expectedBR + 'px',
-      'sets bottom right to expected');
-  t.equal(testEntity._element.style.borderRadiusBottomLeft, expectedBL + 'px',
-      'sets bottom left to expected');
+  t.equal(testEntity._element.style.width, expected + 'px');
+  t.equal(testEntity._element.style.height, expected + 'px');
+  // t.equal(testEntity._element.style.borderRadius, '50%');
 
   t.end();
 });
@@ -252,14 +239,9 @@ test('renderRounded() sets elements border radius to 0 by default', t => {
   rendrr.init(testEntity);
   rendrr.renderRounded(testEntity);
 
-  t.equal(testEntity._element.style.borderRadiusTopRight, 0 + 'px',
-      'sets top right to 0');
-  t.equal(testEntity._element.style.borderRadiusTopLeft, 0 + 'px',
-      'sets top left to 0');
-  t.equal(testEntity._element.style.borderRadiusBottomRight, 0 + 'px',
-      'sets bottom right to 0');
-  t.equal(testEntity._element.style.borderRadiusBottomLeft, 0 + 'px',
-      'sets bottom left to 0');
+  t.equal(testEntity._element.style.width, 0 + 'px');
+  t.equal(testEntity._element.style.height, 0 + 'px');
+  //t.equal(testEntity._element.style.borderRadius, '50%');
 
   t.end();
 });

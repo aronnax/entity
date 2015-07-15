@@ -2,6 +2,9 @@
 import {inheritance as inh} from 'aronnax-inheritance';
 
 export * from './shapes';
+export * from './collision';
+
+const DEFAULT_BG = '#000';
 
 export var moveable = {
   name: 'moveable',
@@ -31,6 +34,14 @@ export var bounded = {
     if (entity.y < 0 || entity.y >= (entity.renderer.bH - entity.h)) {
       entity.v.y *= -1;
     }
+  }
+};
+
+export var colored = {
+  name: 'colored',
+
+  init(entity, props) {
+    entity.bg = props.bg || DEFAULT_BG;
   }
 };
 

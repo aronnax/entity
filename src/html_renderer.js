@@ -21,7 +21,7 @@ export var htmlRenderer = {
   },
 
   beforeRender(entity) {
-    entity._element.style.background = this.BG_COLOR;
+    entity._element.style.background = entity.bg || this.BG_COLOR;
   },
 
   renderMovement(entity={}) {
@@ -39,10 +39,9 @@ export var htmlRenderer = {
   renderRounded(entity={}) {
     var el = entity._element;
 
-    el.style.borderRadiusTopRight = (entity.r && entity.r.tr || 0 ) + 'px';
-    el.style.borderRadiusTopLeft = (entity.r && entity.r.tl || 0 ) + 'px';
-    el.style.borderRadiusBottomRight = (entity.r && entity.r.br || 0 ) + 'px';
-    el.style.borderRadiusBottomLeft = (entity.r && entity.r.bl || 0 ) + 'px';
+    entity._element.style.width = Math.floor(entity.r || 0) + 'px';
+    entity._element.style.height = Math.floor(entity.r || 0) + 'px';
+    entity._element.style.borderRadius = '50%';
   }
 };
 
