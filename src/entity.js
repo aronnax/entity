@@ -1,6 +1,6 @@
 
 import ee2 from 'eventemitter2';
-import sat from 'sat';
+import SAT from 'sat';
 
 import {inheritance as inh} from 'aronnax-inheritance';
 import {Pooled} from 'aronnax-pooling';
@@ -36,7 +36,7 @@ export var Entity = {
   },
 
   init(props={}) {
-    this.pos = new sat.Vector(props.x, props.y);
+    this.pos = new SAT.Vector(props.x, props.y);
     this.w = props.w || 0;
     this.h = props.h || 0;
     this.initComponents(this, props);

@@ -18,7 +18,6 @@ export var rectangular = Object.create(SAT.Box.prototype, inh.wrapProps({
   }
 }));
 
-
 export var rounded = Object.create(SAT.Circle, inh.wrapProps({
   name: 'rounded',
   isRounded: true,
