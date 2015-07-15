@@ -53,6 +53,7 @@ test('basic setup for html renderer', t => {
   teste.init({x: eX, y: eY, w: eW, h: eH});
 
   // after init
+  t.ok(teste.rectangular.toPolygon, 'sets SAT methods');
   t.equal(teste.x, eX, 'x set to expected');
   t.equal(teste.w, eW, 'x set to expected');
   t.equal(teste.v.x, 0, 'moveable components sets velocity to 0 by default');

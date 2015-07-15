@@ -1,7 +1,9 @@
 
 import {inheritance as inh} from 'aronnax-inheritance';
+import SAT from 'sat';
 
-export var rectangular = {
+
+export var rectangular = Object.create(SAT.Box.prototype, inh.wrapProps({
   name: 'rectangular',
   isRectangular: true,
 
@@ -14,19 +16,32 @@ export var rectangular = {
     entity.renderer.beforeRender(entity);
     entity.renderer.renderRectangle(entity);
   }
-};
+}));
 
-export var rounded = {
+
+export var rounded = Object.create(SAT.Circle, inh.wrapProps({
   name: 'rounded',
   isRounded: true,
 
   init(entity, props) {
-    entity.r = props.r || {tl: 0, tr: 0, bl: 0, br: 0};
+    entity.r = props.r || 0;
   },
 
   render(entity) {
     entity.renderer.beforeRender(entity);
     entity.renderer.renderRounded(entity);
   }
+}));
 
-};
+export var polygoned = Object.create(SAT.Polygon, inh.wrapProps({
+  name: 'polygoned',
+  isPolygoned: true,
+
+  init(entity, props) {
+    entity.points = props.point;
+  },
+
+  render(entity) {
+
+  }
+}));
