@@ -20,19 +20,25 @@ export var collision = {
   checkCollision(entityA, entityB) {
     var response = new SAT.Response(),
         collided = false,
+        mentityA = entityA,
+        mentityB = entityB,
         method;
 
     if (entityA.isRounded && entityB.isRounded) {
       method = SAT.testCircleCircle;
     } else if (entityA.isRounded) {
+      mentityB = entityB.toPolygon();
       method = SAT.testCirclePolygon;
     } else if (entityB.isRounded) {
+      mentityA = entityA.toPolygon();
       method = SAT.testPolygonCircle;
     } else {
+      mentityA = entityA.toPolygon();
+      mentityB = entityB.toPolygon();
       method = SAT.testPolygonPolygon;
     }
 
-    collision = method(entityA, entityB, response);
+    collision = method(mentityA, mentityB, response);
     if (collision) {
       entityA.emit('collision', response);
       return response;
