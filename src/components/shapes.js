@@ -24,6 +24,16 @@ export var rounded = Object.create(SAT.Circle, inh.wrapProps({
   isRounded: true,
 
   init(entity, props) {
+    Object.defineProperty(entity, 'r', {
+      set: function(val) {
+        this._r = val;
+        this.w = val * 2;
+        this.h = val * 2;
+      },
+      get: function() {
+        return this._r;
+      }
+    });
     entity.r = props.r || 0;
     entity.isRounded = true;
   },

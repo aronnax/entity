@@ -39,8 +39,8 @@ export var htmlRenderer = {
   renderRounded(entity={}) {
     var el = entity._element;
 
-    entity._element.style.width = Math.floor(entity.r || 0) + 'px';
-    entity._element.style.height = Math.floor(entity.r || 0) + 'px';
+    entity._element.style.width = Math.floor(entity.r * 2 || 0) + 'px';
+    entity._element.style.height = Math.floor(entity.r * 2 || 0) + 'px';
     entity._element.style.borderRadius = '50%';
   }
 };

@@ -63,3 +63,20 @@ test('render() calls renderRectangle on renderer', t => {
 
   t.end();
 });
+
+/**
+ * rounded
+ */
+test('init() sets an r on the entity which sets w, h', t => {
+  var testEntity = {},
+      expected = {r: 10};
+
+  rounded.init(testEntity, expected);
+
+  t.equal(testEntity.r, expected.r, 'Sets the r property on the entity');
+  t.equal(testEntity.w, expected.r * 2, 'Sets the w * 2 r on entity');
+  t.equal(testEntity.h, expected.r * 2, 'Sets the h * 2 r on entity');
+
+  t.end();
+});
+

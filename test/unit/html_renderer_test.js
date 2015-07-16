@@ -215,7 +215,7 @@ test('renderRectangle() sets elements width and height to 0 by default', t => {
  * renderRounded();
  * =============================================================================
  */
-test('renderRounded() sets elements border radius elements', t => {
+test('renderRounded() sets elements  width and height to r * 2', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
       expected = 5,
       testEntity = {};
@@ -225,14 +225,14 @@ test('renderRounded() sets elements border radius elements', t => {
   rendrr.init(testEntity);
   rendrr.renderRounded(testEntity);
 
-  t.equal(testEntity._element.style.width, expected + 'px');
-  t.equal(testEntity._element.style.height, expected + 'px');
+  t.equal(testEntity._element.style.width, (expected * 2) + 'px');
+  t.equal(testEntity._element.style.height, (expected * 2) + 'px');
   // t.equal(testEntity._element.style.borderRadius, '50%');
 
   t.end();
 });
 
-test('renderRounded() sets elements border radius to 0 by default', t => {
+test('renderRounded() sets elements width and height to r * 2', t => {
   var rendrr = setupHTMLRenderer(document.createElement('div')),
       testEntity = {};
 
