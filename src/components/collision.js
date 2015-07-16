@@ -21,24 +21,53 @@ export var collision = {
     var response = new SAT.Response(),
         collided = false,
         mentityA = entityA,
-        mentityB = entityB,
-        method;
+        mentityB = entityB;
 
+    // TODO fix this logic and make less messy.
     if (entityA.isRounded && entityB.isRounded) {
-      method = SAT.testCircleCircle;
+      let origEntityAX = entityA.x;
+      let origEntityAY = entityA.y;
+      mentityA.x = entityA.x + entityA.r;
+      mentityA.y = entityA.y + entityA.r;
+      let origEntityBX = entityB.x;
+      let origEntityBY = entityB.y;
+      mentityB.x = entityB.x + entityB.r;
+      mentityB.y = entityB.y + entityB.r;
+
+      collision = SAT.testCircleCircle(mentityA, mentityB, response);
+      entityA.x = origEntityAX;
+      entityA.y = origEntityAY;
+      entityB.x = origEntityBX;
+      entityB.y = origEntityBY;
     } else if (entityA.isRounded) {
-      mentityB = entityB.toPolygon();
-      method = SAT.testCirclePolygon;
+      let origEntityAX = entityA.x;
+      let origEntityAY = entityA.y;
+      mentityA.x = entityA.x + entityA.r;
+      mentityA.y = entityA.y + entityA.r;
+      mentityB = entityB.rectangular.toPolygon.call(entityB);
+
+      collision = SAT.testCirclePolygon(mentityA, mentityB, response);
+
+      entityA.x = origEntityAX;
+      entityA.y = origEntityAY;
     } else if (entityB.isRounded) {
-      mentityA = entityA.toPolygon();
-      method = SAT.testPolygonCircle;
+      let origEntityBX = entityB.x;
+      let origEntityBY = entityB.y;
+      mentityB.x = entityB.x + entityB.r;
+      mentityB.y = entityB.y + entityB.r;
+      mentityA = entityA.rectangular.toPolygon.call(entityA);
+
+      collision = SAT.testPolygonCircle(mentityA, mentityB, response);
+
+      entityB.x = origEntityBX;
+      entityB.y = origEntityBY;
     } else {
-      mentityA = entityA.toPolygon();
-      mentityB = entityB.toPolygon();
-      method = SAT.testPolygonPolygon;
+      mentityA = entityA.rectangular.toPolygon.call(entityA);
+      mentityB = entityB.rectangular.toPolygon.call(entityB);
+
+      collision = SAT.testPolygonPolygon(mentityA, mentityB, response);
     }
 
-    collision = method(mentityA, mentityB, response);
     if (collision) {
       entityA.emit('collision', response);
       return response;
